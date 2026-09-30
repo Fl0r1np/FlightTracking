@@ -3,11 +3,14 @@ name = "FlightTracking"
 version = "0.1.0"
 description = "Extract and analyze live flight data from the OpenSky Network"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+    "pandas>=2.3.3",
+    "requests>=2.34.2",
+]
 
 [build-system]
 requires = ["setuptools>=68.0", "wheel"]
-build-backend = "setuptools.backends._legacy:_Backend"
+build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["src"]
