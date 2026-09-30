@@ -1,0 +1,115 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+*.manifest
+*.spec
+pip-log.txt
+pip-delete-this-directory.txt
+# =========================
+# Virtual Environments
+# =========================
+.venv/
+venv/
+ENV/
+env/
+# =========================
+# Distribution / Packaging
+# =========================
+*.tar.gz
+*.whl
+*.zip
+# =========================
+# IDE / Editors
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+# =========================
+# Jupyter Notebooks
+# =========================
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+# =========================
+# Environment & Secrets
+# =========================
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+secrets/
+credentials/
+# =========================
+# Logs
+# =========================
+*.log
+logs/
+# =========================
+# Testing / Coverage
+# =========================
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+# =========================
+# Mypy / Linting
+# =========================
+.mypy_cache/
+.ruff_cache/
+.dmypy.json
+dmypy.json
+# =========================
+# Apache Airflow
+# =========================
+airflow.db
+airflow.cfg
+airflow-webserver.pid
+unittests.cfg
+webserver_config.py
+airflow_logs/
+# =========================
+# Apache Spark
+# =========================
+metastore_db/
+derby.log
+spark-warehouse/
+# =========================
+# dbt
+# =========================
+dbt_packages/
+dbt_modules/
+target/
+# =========================
+# Terraform (if used for infra)
+# =========================
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+# =========================
+# Docker
+# =========================
+docker-compose.override.yml
+# =========================
+# OS Files
+# =========================
+.DS_Store
+Thumbs.db
+Desktop.ini
