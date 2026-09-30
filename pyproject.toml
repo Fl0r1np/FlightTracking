@@ -5,6 +5,7 @@ description = "Extract and analyze live flight data from the OpenSky Network"
 requires-python = ">=3.10"
 dependencies = [
     "pandas>=2.3.3",
+    "python-dotenv>=1.2.3",
     "requests>=2.34.2",
 ]
 
