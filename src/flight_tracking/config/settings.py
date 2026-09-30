@@ -5,16 +5,45 @@ from dotenv import load_dotenv
 # will automatically have the environment variables loaded.
 load_dotenv()
 
+def get_required_env(key: str) -> str:
+    '''
+    Helper method to get the specified required environment variable from the environment
+    :param key: A string containing the required environment variable
+    :return: Returns the required environment variable
+    '''
+
+    value = os.getenv(key)
+    if not value:  # Triggers if the variable is missing or empty
+        raise ValueError(f"CRITICAL: Missing required environment variable: '{key}'. Please check your .env file.")
+    return value
+
+def get_bounding_box() -> tuple:
+    '''
+    Helper method to get a parsed bounding box setting from the environment variable
+    :return: Return bounding box setting
+    '''
+
+    # Fetch the raw string from the environment
+    _bbox_str = os.getenv("DEFAULT_BBOX")
+
+    # Parse it into a tuple of floats
+    if _bbox_str:
+        _bbox_value = tuple(float(coord.strip()) for coord in _bbox_str.split(","))
+    else:
+        _bbox_value = (.0, .0, .0, .0)
+
+    return _bbox_value
+
 class Config:
     """Central configuration for the Flight Tracking data pipeline."""
 
     # OpenSky API Credentials
-    OPENSKY_USERNAME = os.getenv("OPENSKY_USERNAME")
-    OPENSKY_PASSWORD = os.getenv("OPENSKY_PASSWORD")
+    OPENSKY_USERNAME = get_required_env("OPENSKY_USERNAME")
+    OPENSKY_PASSWORD = get_required_env("OPENSKY_PASSWORD")
 
     # OpenSky API Settings
     OPENSKY_API_URL = os.getenv("OPENSKY_API_URL", "https://opensky-network.org/api")
-    OPENSKY_API_BOUNDING_BOX = os.getenv("OPENSKY_API_BOUNDING_BOX")
-    OPENSKY_API_REQUEST_TIMEOUT_SECONDS = os.getenv("OPENSKY_API_REQUEST_TIMEOUT_SECONDS")
-    OPENSKY_API_MAX_RETRIES = os.getenv("OPENSKY_API_MAX_RETRIES")
+    OPENSKY_API_BOUNDING_BOX = get_bounding_box()
+    OPENSKY_API_REQUEST_TIMEOUT_SECONDS = os.getenv("OPENSKY_API_REQUEST_TIMEOUT_SECONDS", 10)
+    OPENSKY_API_MAX_RETRIES = os.getenv("OPENSKY_API_MAX_RETRIES", 5)
 
