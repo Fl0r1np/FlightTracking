@@ -1,5 +1,6 @@
 import os
 from config.settings import Config
+from flight_tracking.ingestion.extractor import OpenSkyAPIFacade
 
 if __name__ == '__main__':
 
@@ -11,4 +12,6 @@ if __name__ == '__main__':
     opensky_api_request_timeout = Config.OPENSKY_API_REQUEST_TIMEOUT_SECONDS
     opensky_api_max_retries = Config.OPENSKY_API_MAX_RETRIES
 
-    print(f"OpenSky Information: {opensky_username}:{opensky_password}, {opensky_api_url}, {opensky_api_bounding_box}, {opensky_api_request_timeout}, {opensky_api_max_retries}")
+    #print(f"OpenSky Information: {opensky_username}:{opensky_password}, {opensky_api_url}, {opensky_api_bounding_box}, {opensky_api_request_timeout}, {opensky_api_max_retries}")
+    api = OpenSkyAPIFacade(opensky_username, opensky_password)
+    print(api.get_states((43.62, 48.26, 20.26, 29.70)))
