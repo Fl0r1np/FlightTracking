@@ -1,8 +1,10 @@
-import os
 from config.settings import Config
 from flight_tracking.ingestion.extractor import OpenSkyAPIFacade
 
 if __name__ == '__main__':
+
+    # Logging sistem configuration
+
 
     # Load OpenSky API Credentials
     opensky_username = Config.OPENSKY_USERNAME
@@ -15,3 +17,5 @@ if __name__ == '__main__':
     #print(f"OpenSky Information: {opensky_username}:{opensky_password}, {opensky_api_url}, {opensky_api_bounding_box}, {opensky_api_request_timeout}, {opensky_api_max_retries}")
     api = OpenSkyAPIFacade(opensky_username, opensky_password)
     print(api.fetch_flight_states())
+
+
