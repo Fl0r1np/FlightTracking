@@ -14,4 +14,4 @@ if __name__ == '__main__':
 
     #print(f"OpenSky Information: {opensky_username}:{opensky_password}, {opensky_api_url}, {opensky_api_bounding_box}, {opensky_api_request_timeout}, {opensky_api_max_retries}")
     api = OpenSkyAPIFacade(opensky_username, opensky_password)
-    print(api.get_states((43.62, 48.26, 20.26, 29.70)))
+    print(api.fetch_flight_states())

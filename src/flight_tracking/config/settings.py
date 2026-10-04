@@ -24,13 +24,13 @@ def get_bounding_box() -> tuple:
     '''
 
     # Fetch the raw string from the environment
-    _bbox_str = os.getenv("DEFAULT_BBOX")
+    _bbox_str = os.getenv("OPENSKY_API_DEFAULT_BBOX")
 
     # Parse it into a tuple of floats
     if _bbox_str:
         _bbox_value = tuple(float(coord.strip()) for coord in _bbox_str.split(","))
     else:
-        _bbox_value = (.0, .0, .0, .0)
+        raise ValueError("CRITICAL: Missing required environment variable: 'OPENSKY_API_DEFAULT_BBOX'")
 
     return _bbox_value
 
