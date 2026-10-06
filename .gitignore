@@ -113,3 +113,7 @@ docker-compose.override.yml
 .DS_Store
 Thumbs.db
 Desktop.ini
+# =========================
+# Custom Files
+# =========================
+PROJECT_CONTEXT.md

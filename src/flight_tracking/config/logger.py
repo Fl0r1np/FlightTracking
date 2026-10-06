@@ -36,6 +36,3 @@ logging.basicConfig(
         stream_handler
     ]
 )
-
-# Export a logger instance to be imported by other modules
-logger = logging.getLogger(__name__)
