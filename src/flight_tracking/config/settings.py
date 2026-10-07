@@ -76,3 +76,6 @@ class Config:
     # Logging Settings
     LOGGING_LEVEL = get_log_level()
 
+    # Data Settings
+    RAW_DATA_DIR = os.path.join("data", "raw")
+

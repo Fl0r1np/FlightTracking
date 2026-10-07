@@ -1,9 +1,8 @@
 import logging
-
+import flight_tracking.config.logger
 from opensky_api import TokenManager
-
 from config.settings import Config
-from flight_tracking.ingestion.extractor import OpenSkyAPI
+from flight_tracking.ingestion.extractor import OpenSkyExtractor
 
 if __name__ == '__main__':
 
@@ -20,11 +19,9 @@ if __name__ == '__main__':
     opensky_api_max_retries = Config.OPENSKY_API_MAX_RETRIES
 
     #print(f"OpenSky Information: {opensky_username}:{opensky_password}, {opensky_api_url}, {opensky_api_bounding_box}, {opensky_api_request_timeout}, {opensky_api_max_retries}")
-    logger.info('Fetch current flight states with the default bbox')
     token_manager = TokenManager(opensky_username, opensky_password)
-    api = OpenSkyAPI(token_manager)
+    api = OpenSkyExtractor(token_manager)
     print(api.fetch_flight_states())
-    logger.info('Fetch current flight states executed successfully')
 
     logger.info('OpenSky Flight Tracking Ingestion finishing...')
 

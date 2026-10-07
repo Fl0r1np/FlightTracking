@@ -4,12 +4,12 @@ from requests.exceptions import HTTPError, Timeout, ConnectionError
 from opensky_api import TokenManager
 
 from flight_tracking.config.settings import Config
+from flight_tracking.ingestion.storage import storage
 from flight_tracking.models.bbox import BoundingBox
 
 logger = logging.getLogger(__name__)
 
-class OpenSkyAPI:
-
+class OpenSkyExtractor:
     def __init__(self, token_manager: TokenManager = None):
         self.token_manager = token_manager
         self.session = requests.Session()
@@ -23,6 +23,9 @@ class OpenSkyAPI:
         :param bbox: A BoundingBox object representing the bounding box.
         :return: Returns a dict of the raw JSON response.
         """
+
+        logger.info(f"Starting to fetch flight states from OpenSky API.")
+
         if bbox is None:
             bbox = self.default_bbox
 
@@ -60,8 +63,13 @@ class OpenSkyAPI:
 
             # Raise HTTPError for any non-2xx response
             response.raise_for_status()
-            
-            return response.json()
+
+            # Save the raw data to storage
+            raw_json = response.json()
+            storage.save_raw_data(raw_json)
+
+            logger.info("Successfully fetched flight states from OpenSky API.")
+            return raw_json
 
         except Timeout as e:
             logger.error(f"Request to OpenSky API timed out: {e}")
