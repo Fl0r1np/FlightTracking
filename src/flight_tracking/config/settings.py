@@ -79,3 +79,6 @@ class Config:
     # Data Settings
     RAW_DATA_DIR = os.path.join("data", "raw")
 
+    # Error webhook url
+    ALERT_WEBHOOK_URL = os.getenv("ALERT_WEBHOOK_URL", None)
+
