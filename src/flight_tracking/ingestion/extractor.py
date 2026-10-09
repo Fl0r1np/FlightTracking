@@ -2,10 +2,12 @@ import logging
 import requests
 from requests.exceptions import HTTPError, Timeout, ConnectionError
 from opensky_api import TokenManager
-
 from flight_tracking.config.settings import Config
 from flight_tracking.ingestion.storage import storage
 from flight_tracking.models.bbox import BoundingBox
+from tenacity import retry, stop_after_attempt, wait_exponential, retry_if_exception
+
+from flight_tracking.utils.retry_utils import is_transient_error, log_retry_attempt
 
 logger = logging.getLogger(__name__)
 
@@ -17,6 +19,13 @@ class OpenSkyExtractor:
         self.default_bbox = BoundingBox.from_tuple(Config.OPENSKY_API_BOUNDING_BOX)
         self.timeout = float(Config.OPENSKY_API_REQUEST_TIMEOUT_SECONDS)
 
+    @retry(
+        wait=wait_exponential(multiplier=2, min=2, max=16), # Wait 2s, 4s, 8s, 16s
+        stop=stop_after_attempt(int(Config.OPENSKY_API_MAX_RETRIES)),
+        retry=retry_if_exception(is_transient_error), # Point to the custom evaluation function
+        before_sleep=log_retry_attempt,
+        reraise=True
+    )
     def fetch_flight_states(self, bbox: BoundingBox = None):
         """
         A method to fetch flight states from OpenSky API
@@ -52,14 +61,6 @@ class OpenSkyExtractor:
                 headers=headers,
                 timeout=self.timeout
             )
-
-            # Handle 429 Too Many Requests explicitly
-            if response.status_code == 429:
-                retry_after = response.headers.get("Retry-After", "unknown")
-                logger.warning(f"Rate limit exceeded (429 Too Many Requests). Retry-After: {retry_after} seconds.")
-            # Handle 5xx server errors explicitly
-            elif 500 <= response.status_code < 600:
-                logger.warning(f"Transient server error encountered. Status Code: {response.status_code}.")
 
             # Raise HTTPError for any non-2xx response
             response.raise_for_status()
