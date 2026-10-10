@@ -20,3 +20,9 @@ where = ["src"]
 
 [tool.uv.sources]
 opensky-api = { git = "https://github.com/openskynetwork/opensky-api.git", subdirectory = "python" }
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "responses>=0.26.3",
+]
