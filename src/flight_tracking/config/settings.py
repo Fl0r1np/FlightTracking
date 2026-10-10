@@ -70,12 +70,15 @@ class Config:
     # OpenSky API Settings
     OPENSKY_API_URL = os.getenv("OPENSKY_API_URL", "https://opensky-network.org/api")
     OPENSKY_API_BOUNDING_BOX = get_bounding_box()
-    OPENSKY_API_REQUEST_TIMEOUT_SECONDS = os.getenv("OPENSKY_API_REQUEST_TIMEOUT_SECONDS", 10)
-    OPENSKY_API_MAX_RETRIES = os.getenv("OPENSKY_API_MAX_RETRIES", 5)
+    OPENSKY_API_REQUEST_TIMEOUT_SECONDS = int(os.getenv("OPENSKY_API_REQUEST_TIMEOUT_SECONDS", 10))
+    OPENSKY_API_MAX_RETRIES = int(os.getenv("OPENSKY_API_MAX_RETRIES", 5))
 
     # Logging Settings
     LOGGING_LEVEL = get_log_level()
 
     # Data Settings
     RAW_DATA_DIR = os.path.join("data", "raw")
+
+    # Error webhook url
+    ALERT_WEBHOOK_URL = os.getenv("ALERT_WEBHOOK_URL", None)
 
